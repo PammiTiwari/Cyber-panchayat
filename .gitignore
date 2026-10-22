@@ -1,0 +1,19 @@
+# Python
+backend/venv/
+__pycache__/
+*.py[cod]
+
+# Node
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# SQLite transient write-ahead files (the db itself is excluded by
+# backend/.gitignore)
+*.db-shm
+*.db-wal
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp

@@ -1,0 +1,18 @@
+__pycache__/
+*.pyc
+.env
+venv/
+
+.pytest_cache/
+
+# civic.db and uploads/ are deliberately committed: the app ships with its
+# demo data, so a fresh clone can be run straight away. The transient SQLite
+# write-ahead files are not — they are rebuilt on every run.
+*.db-shm
+*.db-wal
+
+# Local-only reset tooling: the snapshot you restore from and the script that
+# does it. Both are for working on this machine — the shipped civic.db is the
+# database a clone actually runs on.
+civic.seed.db
+reset_data.py
