@@ -55,22 +55,22 @@
             </button>
           </form>
 
-          <!-- ─── DEV ONLY: demo login shortcuts ───────────────────────────
-               Temporary scaffolding while the app is being worked on. To
-               remove: delete this block, the `demoAccounts` / `fillDemo`
-               bits in the script, and the .demo-* rules in the style block.
-               `import.meta.env.DEV` already keeps it out of a production
-               build (`npm run build`), so it can't leak by accident. -->
-          <div v-if="isDev" class="demo-box">
+          <!-- ─── DEMO: one-click login shortcuts ──────────────────────────
+               Shown on the live demo too, so the app can be shown without
+               typing credentials. To remove: delete this block, the
+               `demoAccounts` / `fillDemo` bits in the script, and the
+               .demo-* rules in the style block. -->
+          <div class="demo-box">
             <div class="demo-head">
-              <span class="demo-tag">DEV</span>
-              <span>Demo accounts — click one to fill the form</span>
+              <span class="demo-tag">DEMO</span>
+              <span>Demo accounts — click one to log in</span>
             </div>
             <button
               v-for="acct in demoAccounts"
               :key="acct.email"
               type="button"
               class="demo-row"
+              :disabled="loading"
               @click="fillDemo(acct)"
             >
               <span class="demo-role">{{ acct.role }}</span>
@@ -101,10 +101,8 @@ const showPassword = ref(false)
 const loading = ref(false)
 const error = ref('')
 
-// ─── DEV ONLY: demo login shortcuts (see the template block above) ───
-// These are the seeded accounts from the README, kept here only so the
-// login form doesn't have to be retyped on every reload.
-const isDev = import.meta.env.DEV
+// ─── DEMO: one-click login shortcuts (see the template block above) ───
+// These are the seeded accounts from the README.
 const demoAccounts = [
   { role: 'Admin', email: 'admin@civic.gov', password: 'Admin@123' },
   { role: 'Officer', email: 'rajesh@civic.gov', password: 'Staff@123' },
@@ -112,7 +110,7 @@ const demoAccounts = [
 ]
 function fillDemo(acct) {
   form.value = { email: acct.email, password: acct.password }
-  error.value = ''
+  handleLogin()
 }
 
 // Handle login form submission
@@ -276,7 +274,7 @@ async function handleLogin() {
 .auth-switch a { color: var(--primary); font-weight: 700; text-decoration: underline; }
 
 
-/* ─── DEV ONLY: demo login shortcuts — delete with the template block ─── */
+/* ─── DEMO: one-click login shortcuts — delete with the template block ─── */
 .demo-box {
   margin-top: 1.25rem;
   border: 1.5px dashed var(--border);
