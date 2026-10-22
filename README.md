@@ -7,6 +7,12 @@ that work to the right department, track it, and close it off.
 Flask REST API with a Vue 3 single-page frontend. SQLite, so there is no
 database server to install.
 
+**Live demo:** https://cyber-panchayat.vercel.app
+
+> The live demo runs on Vercel, whose filesystem is temporary: the demo data
+> is always there, but anything you add (new accounts, complaints, uploads)
+> is reset after a while. Use the [Demo logins](#demo-logins) below to sign in.
+
 ---
 
 ## What is in this zip

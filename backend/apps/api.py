@@ -103,7 +103,7 @@ def _delete_unreferenced_uploads(urls):
     """
     if not urls:
         return
-    upload_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "uploads"))
+    upload_folder = os.path.abspath(os.environ.get("UPLOAD_FOLDER") or os.path.join(os.path.dirname(__file__), "..", "uploads"))
     for url in {u for u in urls if u}:
         if "/uploads/" not in url:
             continue
@@ -2654,7 +2654,7 @@ class UploadResource(Resource):
             return {"message": "Invalid file type"}, 400
         ext = file.filename.rsplit(".", 1)[1].lower()
         filename = f"{uuid.uuid4().hex}.{ext}"
-        upload_folder = os.path.join(os.path.dirname(__file__), "..", "uploads")
+        upload_folder = os.environ.get("UPLOAD_FOLDER") or os.path.join(os.path.dirname(__file__), "..", "uploads")
         os.makedirs(upload_folder, exist_ok=True)
         file.save(os.path.join(upload_folder, filename))
         return {"url": f"/api/uploads/{filename}"}, 201
@@ -2665,7 +2665,7 @@ class UploadServeResource(Resource):
         """Serves a previously uploaded file straight from the uploads/
         folder by filename — the actual bytes behind every /uploads/...
         URL that UploadResource hands back."""
-        upload_folder = os.path.join(os.path.dirname(__file__), "..", "uploads")
+        upload_folder = os.environ.get("UPLOAD_FOLDER") or os.path.join(os.path.dirname(__file__), "..", "uploads")
         return send_from_directory(os.path.abspath(upload_folder), filename)
 
 
